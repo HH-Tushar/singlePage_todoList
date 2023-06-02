@@ -26,9 +26,9 @@ class HomeApp extends StatelessWidget {
       //
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.read<SubjectListModel>().addSubject(SubjectModel()
-            ..addTopic("Topic 1")
-            ..addTopic('Topic 2'));
+          context
+              .read<SubjectListModel>()
+              .addSubject(SubjectModel()..create());
         },
       ),
       // you may use this to add new subject
@@ -40,24 +40,42 @@ class SubjectWidget extends StatefulWidget {
   const SubjectWidget(
       {super.key, required this.subject, required this.onDelete});
   final VoidCallback onDelete;
-  final SubjectModel subject;
+  final MySubjectListModel subject;
 
   @override
   State<SubjectWidget> createState() => _SubjectWidgetState();
 }
 
 class _SubjectWidgetState extends State<SubjectWidget> {
+
+  List<Topic> tempo=[];
+
   @override
   Widget build(BuildContext context) {
     // also subject title editing will be handle here
     return Card(
       child: Provider<SubjectModel>.value(
-        value: widget.subject,
+        value: widget.subject.model,
         builder: (context, _) => Column(
           children: [
-            for (var topic in context.watch<SubjectModel>().topics)
-              Text(topic) ,
-              Text("data")// TopicView will be used here
+            Text("Subject Name${widget.subject.title}"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Text("topics:"),
+                const SizedBox(width: 50),
+                MaterialButton(
+                  minWidth: 15,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),color: Colors.black12,elevation: 10,
+                    onPressed: (){
+                   //need more work
+                  widget.subject.model.addTopic("");
+                    }, child:const Icon(Icons.playlist_add)),],),
+
+             for (var item in context.watch<SubjectModel>().topics)
+               Text(item.topic.toString()),
+
+            // TopicView will be used here
           ],
         ),
       ),
@@ -65,17 +83,4 @@ class _SubjectWidgetState extends State<SubjectWidget> {
   }
 }
 
-class TopicView extends StatefulWidget {
-  const TopicView({super.key});
 
-  @override
-  State<TopicView> createState() => _TopicViewState();
-}
-
-class _TopicViewState extends State<TopicView> {
-  @override
-  Widget build(BuildContext context) {
-    // you should handle delete and edit topic functionality here
-    return const Placeholder();
-  }
-}

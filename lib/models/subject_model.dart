@@ -3,18 +3,24 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 
 class SubjectModel with ChangeNotifier {
-  SubjectModel();
-  final List<String> _topics = [];
+   SubjectModel();
+  final List<Topic> _topics = [];
 
-  List<String> get topics => UnmodifiableListView(_topics);
+  //List<String> get topics => UnmodifiableListView(_topics);
+  List<Topic> get topics{return _topics;}
 
+
+  void create() {
+    _topics.add(Topic());
+    notifyListeners();
+  }
   void addTopic(String value) {
-    _topics.add(value);
+    _topics.add(Topic(topic: value));
     notifyListeners();
   }
 
   void removeTopic(String value) {
-    _topics.remove(value);
+    _topics.removeWhere((element) => element.topic==value);
     notifyListeners();
   }
 
@@ -26,7 +32,12 @@ class SubjectModel with ChangeNotifier {
   // make object from data,
   SubjectModel.fromJSON(Map<String, dynamic> map) {
     for (var element in (map['topics'] as List)) {
-      _topics.add(element as String);
+      _topics.add(element as Topic);
     }
   }
+}
+
+class Topic{
+  String? topic;
+  Topic({this.topic});
 }
