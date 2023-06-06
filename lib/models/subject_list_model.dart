@@ -1,10 +1,10 @@
-import 'dart:collection';
+
 
 import 'package:flutter/foundation.dart';
 import 'package:single_page_todo/models/subject_model.dart';
 
 class SubjectListModel with ChangeNotifier {
-  // SubjectListModel();
+   SubjectListModel();
   
 
    List<MySubjectListModel> _subjects = [];
@@ -14,12 +14,17 @@ class SubjectListModel with ChangeNotifier {
     return _subjects;
   }
 
-  void addSubject(SubjectModel model) {
-    _subjects.add(MySubjectListModel(model:model ,title: "vvvhvhvhv"));
+   void create(SubjectModel model) {
+     _subjects.add(MySubjectListModel(model:model ));
+     notifyListeners();
+   }
+
+  void editSubject(SubjectModel model,String title) {
+    _subjects.add(MySubjectListModel(model:model ,title: title));
     notifyListeners();
   }
 
-  void removeSubject(model) {
+  void removeSubject( MySubjectListModel model) {
     _subjects.remove(model);
     notifyListeners();
   }
@@ -29,8 +34,8 @@ class SubjectListModel with ChangeNotifier {
 
 
 class MySubjectListModel{
-   String title;
+   String ?title;
   SubjectModel model;
 
-  MySubjectListModel({ required this.title, required this.model});
+  MySubjectListModel({  this.title, required this.model});
 }

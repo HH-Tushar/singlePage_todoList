@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:single_page_todo/models/subject_list_model.dart';
 import 'package:single_page_todo/ui/home_app.dart';
 
+import 'models/subject_model.dart';
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
    Provider.debugCheckInvalidValueType = null;
@@ -19,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => (SubjectListModel())),
+        ChangeNotifierProvider(create: (_) => (SubjectModel())),
 
         // ChangeNotifierProvider(create: (_) => (SubListOperation())),
       ],

@@ -19,8 +19,9 @@ class SubjectModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeTopic(String value) {
-    _topics.removeWhere((element) => element.topic==value);
+  void removeTopic({value}) {
+    //_topics.removeWhere((element) => element.topic==value);
+    _topics.remove(value);
     notifyListeners();
   }
 
